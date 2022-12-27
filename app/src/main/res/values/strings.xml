@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BinListApp</string>
+    <string name="location">(latitude: %3s, longitude: %3s)</string>
 </resources>

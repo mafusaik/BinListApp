@@ -1,15 +1,19 @@
 package by.homework.hlazarseni.binlistapp
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.EditText
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import by.homework.hlazarseni.binlistapp.api.BinApiService
+import by.homework.hlazarseni.binlistapp.database.*
 import by.homework.hlazarseni.binlistapp.databinding.ActivityMainBinding
+import by.homework.hlazarseni.binlistapp.extension.textChanges
+import by.homework.hlazarseni.binlistapp.mapper.toDomain
+import by.homework.hlazarseni.binlistapp.mapper.toDomainModels
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import retrofit2.Call
@@ -17,14 +21,19 @@ import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private lateinit var binding: ActivityMainBinding
     private var currentRequest: Call<BankCardDTO>? = null
 
+    private val binDao by lazy {
+        this.binDatabase.binDao
+    }
+    private fun allNumbers(): List<String> = binDao.getNumbers().toDomainModels()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -33,9 +42,18 @@ class MainActivity : AppCompatActivity() {
             editTextNumber
                 .textChanges()
                 .debounce(500)
-                .map { getData(it.toString()) }
+                .mapLatest { getData(it.toString()) }
                 .launchIn(lifecycleScope)
+
+            val adapter =
+                ArrayAdapter(this@MainActivity, R.layout.dropdown_item, allNumbers())
+            editTextNumber.setAdapter(adapter)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        currentRequest?.cancel()
     }
 
     private suspend fun getData(numberCard: String) = withContext(Dispatchers.IO) {
@@ -54,18 +72,41 @@ class MainActivity : AppCompatActivity() {
                                 scheme.text = dataCard.scheme ?: "?"
                                 type.text = dataCard.type ?: "?"
                                 brand.text = dataCard.brand ?: "?"
-                                prepaid.text = dataCard.prepaid.toString() ?: "?"
                                 length.text = dataCard.number?.length ?: "?"
-                                luhn.text = dataCard.number?.luhn.toString() ?: "?"
                                 country.text = dataCard.country?.name ?: "?"
                                 flag.text = dataCard.country?.emoji ?: "?"
                                 bankName.text = dataCard.bank?.name ?: "?"
                                 url.text = dataCard.bank?.url ?: "?"
                                 phone.text = dataCard.bank?.phone ?: "?"
 
+                                when (dataCard.prepaid) {
+                                    true -> prepaid.text = getString(R.string.yes)
+                                    false -> prepaid.text = getString(R.string.no)
+                                    else -> prepaid.text = "?"
+                                }
+
+                                when (dataCard.number?.luhn) {
+                                    true -> luhn.text = getString(R.string.yes)
+                                    false -> luhn.text = getString(R.string.no)
+                                    else -> luhn.text = "?"
+                                }
+
                                 val latitude = dataCard.country?.latitude
                                 val longitude = dataCard.country?.longitude
                                 location.text = getString(R.string.location, latitude, longitude)
+
+                                location.setOnClickListener {
+                                    val gmmIntentUri = Uri.parse("geo:$latitude,$longitude")
+                                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                                    mapIntent.setPackage("com.google.android.apps.maps")
+                                    mapIntent.resolveActivity(packageManager)?.let {
+                                        startActivity(mapIntent)
+                                    }
+                                }
+
+                                if (!allNumbers().contains(numberCard) && numberCard.length >= 6) {
+                                    insertNumber(numberCard)
+                                }
 
                             } else {
                                 handleException(HttpException(response))
@@ -82,24 +123,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun EditText.textChanges(): Flow<CharSequence?> {
-        return callbackFlow {
-            val listener = object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) = Unit
-                override fun beforeTextChanged(
-                    s: CharSequence?, start: Int, count: Int, after: Int
-                ) = Unit
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    trySend(s)
-                }
-            }
-            addTextChangedListener(listener)
-            awaitClose { removeTextChangedListener(listener) }
-        }.onStart { emit(text) }
-    }
-
     private fun handleException(e: Throwable) {
         Toast.makeText(this, e.message ?: "unknown error", Toast.LENGTH_SHORT).show()
     }
+
+    fun insertNumber(numberCard: String) =
+        binDao.insert(numberCard.toDomain())
 }

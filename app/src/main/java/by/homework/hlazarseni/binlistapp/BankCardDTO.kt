@@ -8,7 +8,6 @@ data class BankCardDTO(
     val prepaid: Boolean?,
     val country: CountryDTO?,
     val bank: BankDTO?
-
 )
 
 data class NumberDTO(

@@ -1,4 +1,4 @@
-package by.homework.hlazarseni.binlistapp
+package by.homework.hlazarseni.binlistapp.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

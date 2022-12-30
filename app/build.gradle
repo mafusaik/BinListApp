@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -36,6 +37,11 @@ android {
 }
 
 dependencies {
+
+    def roomVersion = "2.4.3"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
 
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"

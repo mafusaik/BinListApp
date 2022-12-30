@@ -8,14 +8,12 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import by.homework.hlazarseni.binlistapp.api.BinApiService
-import by.homework.hlazarseni.binlistapp.database.*
 import by.homework.hlazarseni.binlistapp.databinding.ActivityMainBinding
 import by.homework.hlazarseni.binlistapp.extension.textChanges
-import by.homework.hlazarseni.binlistapp.mapper.toDomain
-import by.homework.hlazarseni.binlistapp.mapper.toDomainModels
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
+import org.koin.android.ext.android.inject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.HttpException
@@ -26,11 +24,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private lateinit var binding: ActivityMainBinding
     private var currentRequest: Call<BankCardDTO>? = null
 
-    private val binDao by lazy {
-        this.binDatabase.binDao
-    }
-    private fun allNumbers(): List<String> = binDao.getNumbers().toDomainModels()
-
+    private val viewModel by inject<ActivityViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +39,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 .mapLatest { getData(it.toString()) }
                 .launchIn(lifecycleScope)
 
-            val adapter =
-                ArrayAdapter(this@MainActivity, R.layout.dropdown_item, allNumbers())
+             viewModel.databaseFlow.onEach { list ->
+            val adapter = ArrayAdapter(this@MainActivity, R.layout.dropdown_item, list)
             editTextNumber.setAdapter(adapter)
+            adapter.notifyDataSetChanged()
+            }
+                .launchIn(lifecycleScope)
         }
+
+
     }
 
     override fun onStop() {
@@ -104,8 +103,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                                     }
                                 }
 
-                                if (!allNumbers().contains(numberCard) && numberCard.length >= 6) {
-                                    insertNumber(numberCard)
+                                if (numberCard.length >= 6) {
+                                    viewModel.insertNumberDB(numberCard)
                                 }
 
                             } else {
@@ -126,7 +125,4 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun handleException(e: Throwable) {
         Toast.makeText(this, e.message ?: "unknown error", Toast.LENGTH_SHORT).show()
     }
-
-    fun insertNumber(numberCard: String) =
-        binDao.insert(numberCard.toDomain())
 }

@@ -106,6 +106,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
                                 if (!allNumbers().contains(numberCard) && numberCard.length >= 6) {
                                     insertNumber(numberCard)
+
+                                    val adapter =
+                                        ArrayAdapter(this@MainActivity, R.layout.dropdown_item, allNumbers())
+                                    editTextNumber.setAdapter(adapter)
                                 }
 
                             } else {

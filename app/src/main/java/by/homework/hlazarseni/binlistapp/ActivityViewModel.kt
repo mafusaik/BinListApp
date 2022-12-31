@@ -7,13 +7,14 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 
-
 class ActivityViewModel(
     private val repository: Repository
     ) : ViewModel() {
 
     val databaseFlow = flow<List<String>> {
-        runCatching {repository.getNumbersDB() }
+        runCatching {
+            repository.getNumbersDB()
+        }
             .onSuccess { emit(it) }
             .onFailure { emit(emptyList()) }
     }.shareIn(

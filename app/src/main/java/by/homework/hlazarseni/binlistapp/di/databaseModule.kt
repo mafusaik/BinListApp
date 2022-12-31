@@ -12,7 +12,6 @@ internal val databaseModule = module {
             BinDatabase::class.java,
             "node-database"
         )
-           // .allowMainThreadQueries()
             .build()
     }
     single { get<BinDatabase>().binDao }

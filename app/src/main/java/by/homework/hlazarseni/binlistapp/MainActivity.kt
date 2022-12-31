@@ -39,15 +39,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 .mapLatest { getData(it.toString()) }
                 .launchIn(lifecycleScope)
 
-             viewModel.databaseFlow.onEach { list ->
-            val adapter = ArrayAdapter(this@MainActivity, R.layout.dropdown_item, list)
-            editTextNumber.setAdapter(adapter)
-            adapter.notifyDataSetChanged()
+            viewModel.databaseFlow
+                .map { list ->
+                val adapter = ArrayAdapter(this@MainActivity, R.layout.dropdown_item, list)
+                editTextNumber.setAdapter(adapter)
+                adapter.notifyDataSetChanged()
             }
                 .launchIn(lifecycleScope)
         }
-
-
     }
 
     override fun onStop() {

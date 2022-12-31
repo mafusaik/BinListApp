@@ -7,10 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface BinDao {
 
     @Query("SELECT * from BinEntity")
-    fun getNumbers(): List<BinEntity>
-
-    @Query("SELECT * from BinEntity")
-    suspend fun getNumbersObserve(): List<BinEntity>
+    fun getNumbersObserve(): List<BinEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: BinEntity)

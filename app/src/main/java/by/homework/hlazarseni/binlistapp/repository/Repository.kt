@@ -11,11 +11,15 @@ class Repository(
 ) {
 
     suspend fun getNumbersDB() = withContext(Dispatchers.IO) {
-        binDao.getNumbersObserve().toDomainModels()
+        runCatching {
+            binDao.getNumbersObserve().toDomainModels()
+        }
     }
 
     suspend fun insertNumberDB(numberCard: String) = withContext(Dispatchers.IO) {
-        binDao.insert(numberCard.toDomain())
+        runCatching {
+            binDao.insert(numberCard.toDomain())
+        }
     }
 
 }

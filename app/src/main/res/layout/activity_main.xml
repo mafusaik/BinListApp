@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -12,10 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:errorEnabled="true">
 
         <AutoCompleteTextView
             android:id="@+id/edit_text_number"
@@ -30,50 +28,39 @@
         android:id="@+id/first_string"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container_number">
+        android:layout_gravity="start"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_weight="0.8"
             android:text="@string/scheme_network"
             android:textSize="@dimen/header_text" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.8"
-            android:gravity="center"
+            android:layout_weight="0.5"
             android:text="@string/type"
             android:textSize="@dimen/header_text" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/brand"
-            android:textSize="@dimen/header_text" />
+        
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/second_string"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/first_string">
+        android:layout_gravity="start"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/scheme"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_weight="0.8"
             android:text=""
             android:textSize="@dimen/info_text"
             android:textStyle="bold" />
@@ -82,46 +69,34 @@
             android:id="@+id/type"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.8"
-            android:gravity="center"
+            android:layout_weight="0.5"
             android:text=""
             android:textSize="@dimen/info_text"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/brand"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text=""
-            android:textSize="@dimen/info_text"
-            android:textStyle="bold" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/third_string"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
         android:layout_marginTop="24dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/second_string">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.8"
-            android:gravity="center"
             android:text="@string/card_number"
             android:textSize="@dimen/header_text" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/country"
+            android:layout_weight="0.5"
+            android:text="@string/brand"
             android:textSize="@dimen/header_text" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -130,15 +105,14 @@
         android:id="@+id/four_string"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/third_string">
+        android:layout_gravity="start"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:gravity="center"
             android:text="@string/length"
             android:textSize="12sp" />
 
@@ -146,30 +120,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:gravity="center"
             android:text="@string/luhn"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/flag"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:gravity="center"
-            android:text=""
-            android:textSize="@dimen/info_text"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/country"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.8"
-            android:gravity="start"
-            android:text=""
-            android:textSize="@dimen/info_text"
-            android:textStyle="bold" />
-
+            android:layout_weight="0.5"
+            android:textSize="12sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -177,10 +135,9 @@
         android:id="@+id/five_string"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/four_string">
+        android:layout_gravity="start"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/length"
@@ -189,7 +146,6 @@
             android:layout_weight="0.4"
             android:clickable="true"
             android:focusable="true"
-            android:gravity="center"
             android:text=""
             android:textSize="@dimen/info_text"
             android:textStyle="bold" />
@@ -201,100 +157,153 @@
             android:layout_weight="0.4"
             android:clickable="true"
             android:focusable="true"
-            android:gravity="center"
             android:text=""
             android:textSize="@dimen/info_text"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/brand"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:text=""
+            android:textSize="@dimen/info_text"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/country"
+            android:textSize="@dimen/header_text" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/flag"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textSize="@dimen/info_text"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/country"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textSize="@dimen/info_text"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <TextView
             android:id="@+id/location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="all"
+            android:focusable="true"
+            android:gravity="start"
+            android:linksClickable="true"
+            android:text=""
+            android:textSize="@dimen/info_text"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/six_string"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/prepaid"
+                android:textSize="@dimen/header_text" />
+
+            <TextView
+                android:id="@+id/prepaid"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:text=""
+                android:textSize="@dimen/info_text"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/seven_string"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:autoLink="all"
-            android:focusable="true"
-            android:gravity="center"
-            android:linksClickable="true"
-            android:text=""
-            android:textSize="@dimen/info_text"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/bank"
+                android:textSize="@dimen/header_text" />
+
+            <TextView
+                android:id="@+id/bank_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:text=""
+                android:textSize="@dimen/info_text"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/url"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:autoLink="web"
+                android:gravity="start"
+                android:linksClickable="true"
+                android:text=""
+                android:textSize="@dimen/info_text"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:autoLink="phone"
+                android:gravity="start"
+                android:linksClickable="true"
+                android:text=""
+                android:textSize="@dimen/info_text"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/six_string"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/five_string">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/prepaid"
-            android:textSize="@dimen/header_text" />
-
-        <TextView
-            android:id="@+id/prepaid"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:text=""
-            android:textSize="@dimen/info_text"
-            android:textStyle="bold" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/seven_string"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:padding="6dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/six_string"
-        app:layout_constraintTop_toBottomOf="@+id/five_string">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/bank"
-            android:textSize="@dimen/header_text" />
-
-        <TextView
-            android:id="@+id/bank_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:text=""
-            android:textSize="@dimen/info_text"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/url"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:autoLink="web"
-            android:gravity="start"
-            android:linksClickable="true"
-            android:text=""
-            android:textSize="@dimen/info_text"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/phone"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:autoLink="phone"
-            android:gravity="start"
-            android:linksClickable="true"
-            android:text=""
-            android:textSize="@dimen/info_text"
-            android:textStyle="bold" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

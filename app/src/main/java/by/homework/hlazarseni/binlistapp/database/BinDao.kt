@@ -9,7 +9,7 @@ interface BinDao {
     @Query("SELECT * from BinEntity")
     fun getNumbersObserve(): List<BinEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(item: BinEntity)
 
 }

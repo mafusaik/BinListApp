@@ -40,10 +40,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 .launchIn(lifecycleScope)
 
             viewModel.databaseFlow
-                .map { list ->
+                .onEach { list ->
                 val adapter = ArrayAdapter(this@MainActivity, R.layout.dropdown_item, list)
                 editTextNumber.setAdapter(adapter)
-                adapter.notifyDataSetChanged()
             }
                 .launchIn(lifecycleScope)
         }
